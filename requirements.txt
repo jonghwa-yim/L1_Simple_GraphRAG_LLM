@@ -1,0 +1,7 @@
+python-dotenv
+langchain
+langchain_community 
+langchain_experimental
+langchain_openai
+neo4j
+json-repair
