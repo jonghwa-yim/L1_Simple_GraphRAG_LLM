@@ -32,57 +32,6 @@ neo4j_uri = os.getenv("NEO4J_URL", "bolt://localhost:7687")
 neo4j_username = os.getenv("NEO4J_USERNAME", "neo4j")
 neo4j_password = os.getenv("NEO4J_PASSWORD", "password")
 
-# Store chat history and node types globally with thread safety
-# detected_node_types: List[str] = []
-# detected_rel_types: List[str] = []
-# detected_nr_updated = True
-# history_lock = Lock()
-
-
-# def update_node_types():
-#     """Update the global node types by querying the database"""
-#     global detected_node_types, detected_nr_updated
-#     try:
-#         retriever = create_retriever()
-#         # Query to get all unique node labels except Chunk and Document
-#         result = retriever.query("""
-#             CALL db.labels() YIELD label
-#             WHERE label <> 'Chunk' AND label <> 'Document' AND label <> '__Entity__'
-#             RETURN collect(label) as labels
-#         """)
-#         if result and len(result) > 0:
-#             detected_node_types = result[0].get('labels', [])
-#     except Exception as e:
-#         print(f"Error updating node types: {str(e)}")
-#     finally:
-#         detected_nr_updated = True
-#         logger.info(f"Updated Node: {detected_node_types} ... nr_update: {detected_nr_updated}")
-#         print(f"Updated Node: {detected_node_types} ... nr_update: {detected_nr_updated}")
-
-
-# def update_relation_types():
-#     """Update the global relationship types by querying the database"""
-#     global detected_rel_types, detected_nr_updated
-#     try:
-#         retriever = create_retriever()
-#         # Query to get all unique node labels except Chunk and Document
-#         result = retriever.query("""
-#             MATCH ()-[r]-()
-#             WHERE type(r) <> 'PART_OF'
-#             AND type(r) <> 'FIRST_CHUNK'
-#             AND type(r) <> 'NEXT_CHUNK'
-#             AND type(r) <> 'HAS_ENTITY'
-#             RETURN DISTINCT type(r) AS relationshipType
-#         """)
-#         if result and len(result) > 0:
-#             detected_rel_types = [res.get('relationshipType', []) for res in result]
-#     except Exception as e:
-#         print(f"Error updating relationship types: {str(e)}")
-#     finally:
-#         detected_nr_updated = True
-#         logger.info(f"Updated Rel: {detected_rel_types} ... nr_update: {detected_nr_updated}")
-#         print(f"Updated Rel: {detected_rel_types} ... nr_update: {detected_nr_updated}")
-
 
 class GraphRAGRetriever:
     def __init__(self):
